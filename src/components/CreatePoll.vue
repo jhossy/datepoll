@@ -1,6 +1,6 @@
 <script setup>
     function doCreatePoll() {
-        alert('Submitted poll');
+        alert('Submitted poll with id: ' + crypto.randomUUID());
     }
 </script>
 
