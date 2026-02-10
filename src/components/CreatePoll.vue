@@ -56,10 +56,8 @@
         <div class="mb-3">
             <label for="lbl-create-poll" class="form-label" aria-label="Create poll">3. Create poll</label>
             <div class="input-group">   
-                <button @click="doCreatePoll" type="button" class="btn btn-success">Create poll</button>
+                <button @click="doCreatePoll" type="button" class="btn btn-success">Create</button>
             </div>
         </div>
     </div>
 </template>
-
-
