@@ -1,23 +1,26 @@
 <script setup>
-    import { ref } from 'vue';
+    import { computed, ref } from 'vue';
 
     const date = new Date().toISOString().slice(0, 16);
     const currentDate = ref(date);
     const selectedDates = ref([]);
+    const isDisabled = computed(() => {
+        return selectedDates.value.length > 9;
+    });
 
     function doCreatePoll() {
         alert('Submitted poll with id: ' + crypto.randomUUID());
     }
 
     function doAddDate(){
-        if(!selectedDates.value.includes(currentDate.value)) {
+        if(!selectedDates.value.includes(currentDate.value) && 
+            !isDisabled.value) {
             selectedDates.value.push(currentDate.value);
-            console.log('added - ' + currentDate.value);
         }
-        //alert('Clicked add date with ' + currentDate.value);
-        for(var i = 0; i < selectedDates.length; i++){
-            console.log(selectedDates[i].value);
-        }
+    }
+
+    function doRemove(index) {
+        selectedDates.value.splice(index, 1);
     }
 </script>
 
@@ -31,11 +34,14 @@
         <div>
             <h2>2. Add dates & time</h2>
             <input type="datetime-local" v-model="currentDate" />
-            <button @click="doAddDate">Add date</button>
+            <button @click="doAddDate" :disabled="isDisabled">Add date</button>
         </div>
         <div>
-            <div v-for="(date, index) in selectedDates">
-                <input type="text" key="index" v-model="selectedDates[index]" />
+            <div v-for="(date, index) in selectedDates" :key="index">
+                <span>
+                    <input type="text" v-model="selectedDates[index]" />
+                    <button @click="doRemove(index)">x</button>
+                </span>
             </div>
         </div>
         <div>
