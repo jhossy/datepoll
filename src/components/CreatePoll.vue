@@ -2,6 +2,7 @@
     import { computed, ref } from 'vue';
 
     const date = new Date().toISOString().slice(0, 16);
+    const description = ref('');
     const currentDate = ref(date);
     const selectedDates = ref([]);
     const isDisabled = computed(() => {
@@ -9,13 +10,19 @@
     });
 
     function doCreatePoll() {
-        alert('Submitted poll with id: ' + crypto.randomUUID());
+        var pollCreated = {
+            id: crypto.randomUUID(),
+            dates: selectedDates.value,
+            description: description.value
+        };
+
+        alert('Created poll: ' + JSON.stringify(pollCreated));
     }
 
     function doAddDate(){
         if(!selectedDates.value.includes(currentDate.value) && 
             !isDisabled.value) {
-            selectedDates.value.push(currentDate.value);
+            selectedDates.value.push(currentDate.value);            
         }
     }
 
@@ -26,27 +33,31 @@
 
 <template>
     <div>
-        <h1>Create Poll</h1>
-        <div>
-            <h2>1. Give it a name</h2>
-            <input type="text" placeholder="Enter name here..." />
-        </div>
-        <div>
-            <h2>2. Add dates & time</h2>
-            <input type="datetime-local" v-model="currentDate" />
-            <button @click="doAddDate" :disabled="isDisabled">Add date</button>
-        </div>
-        <div>
-            <div v-for="(date, index) in selectedDates" :key="index">
-                <span>
-                    <input type="text" v-model="selectedDates[index]" />
-                    <button @click="doRemove(index)">x</button>
-                </span>
+        <h1>Create new datepoll</h1>
+        <div class="mb-3">
+            <label for="lbl-enter-name" class="form-label" aria-label="Give it a name">1. Give it a name</label>
+            <div class="input-group">                
+                <input v-model="description" id="lbl-enter-name" class="form-control" type="text" placeholder="Enter name here..." aria-label="Enter name here..."/>
             </div>
         </div>
-        <div>
-            <h2>3. Create poll</h2>
-            <button @click="doCreatePoll">Create poll</button>
+        <div class="mb-3">
+            <label for="lbl-add-date-and-time" class="form-label" aria-label="Add dates & time">2. Add dates & time</label>
+            <div class="input-group">                
+                <input v-model="currentDate" id="lbl-add-date-and-time" class="form-control" type="datetime-local" aria-label="Current date"/>
+                <button @click="doAddDate" :disabled="isDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>
+                <div v-for="(date, index) in selectedDates" :key="index" class="input-group">
+                    <div class="input-group">
+                        <input v-model="selectedDates[index]" type="text" class="form-control m-1"/>
+                        <button @click="doRemove(index)" type="button" class="btn btn-danger m-1">x</button>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="mb-3">
+            <label for="lbl-create-poll" class="form-label" aria-label="Create poll">3. Create poll</label>
+            <div class="input-group">   
+                <button @click="doCreatePoll" type="button" class="btn btn-success m-1">Create poll</button>
+            </div>
         </div>
     </div>
 </template>
