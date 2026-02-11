@@ -5,11 +5,17 @@
     const description = ref('');
     const currentDate = ref(date);
     const selectedDates = ref([]);
-    const isDisabled = computed(() => {
+    const isAddDisabled = computed(() => {
         return selectedDates.value.length > 9;
+    });
+    const isCreateEnabled = computed(() => {
+        return selectedDates.value.length > 0;
     });
 
     function doCreatePoll() {
+        if(!isCreateEnabled.value)
+            return;
+
         var pollCreated = {
             id: crypto.randomUUID(),
             dates: selectedDates.value,
@@ -21,7 +27,7 @@
 
     function doAddDate(){
         if(!selectedDates.value.includes(currentDate.value) && 
-            !isDisabled.value) {
+            !isAddDisabled.value) {
             selectedDates.value.push(currentDate.value);            
         }
     }
@@ -44,7 +50,7 @@
             <label for="lbl-add-date-and-time" class="form-label" aria-label="Add dates & time">2. Add dates & time</label>
             <div class="input-group">                
                 <input v-model="currentDate" id="lbl-add-date-and-time" class="form-control mx-1" type="datetime-local" aria-label="Current date"/>
-                <button @click="doAddDate" :disabled="isDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>
+                <button @click="doAddDate" :disabled="isAddDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>
                 <div v-for="(date, index) in selectedDates" :key="index" class="input-group">
                     <div class="input-group">
                          <input :value="new Date(date).toLocaleString()" disabled type="text" class="form-control m-1" />
@@ -56,7 +62,7 @@
         <div class="mb-3">
             <label for="lbl-create-poll" class="form-label" aria-label="Create poll">3. Create poll</label>
             <div class="input-group">   
-                <button @click="doCreatePoll" type="button" class="btn btn-success">Create</button>
+                <button @click="doCreatePoll" :disabled="!isCreateEnabled" type="button" class="btn btn-success">Create</button>
             </div>
         </div>
     </div>
