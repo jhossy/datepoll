@@ -1,5 +1,8 @@
 <script setup>
-    import { computed, readonly, ref } from 'vue';
+    import { computed, ref } from 'vue';
+    import { defineEmits } from 'vue';
+    // Declare the events this component can emit
+    const emit = defineEmits(['poll-created']);
 
     const date = new Date().toISOString().slice(0, 16);
     const description = ref('');
@@ -24,6 +27,7 @@
         };
 
         alert('Created poll: ' + JSON.stringify(pollCreated));
+        emit('poll-created', JSON.stringify(pollCreated));
     }
 
     function doAddDate(){
@@ -54,17 +58,14 @@
             <label for="lbl-add-date-and-time" class="form-label" aria-label="Add dates & time">2. Add dates & time</label>
             <div class="input-group">                
                 <input v-model="currentDate" id="lbl-add-date-and-time" class="form-control mx-1" type="datetime-local" aria-label="Current date"/>                
-                <button @click="doAddDate" :disabled="isAddDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>
-            </div>
-            <div class="input-group">
+                <button @click="doAddDate" :disabled="isAddDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>                
+            </div>            
+            <div class="mb-3">
                 <span class="text-danger mx-2" :class="{ 'd-none' : isWarningHidden }" aria-label="Date already exists">
                     Date already exists
                 </span>
-                <div v-for="(date, index) in selectedDates" :key="index" class="input-group">
-                    <div class="input-group">
-                         <input :value="new Date(date).toLocaleString()" disabled type="text" class="form-control m-1" />
-                        <button @click="doRemove(index)" type="button" class="btn btn-danger m-1">x</button>                        
-                    </div>
+                <div v-for="(date, index) in selectedDates" :key="index" class="list-group m-1">
+                    <button @click="doRemove(index)" type="button" class="list-group-item list-group-item-action" title="Click to remove" aria-label="Click to remove">{{ new Date(date).toLocaleString() }}</button>
                 </div>
             </div>            
         </div>
