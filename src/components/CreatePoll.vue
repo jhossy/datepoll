@@ -11,6 +11,7 @@
     const isCreateEnabled = computed(() => {
         return selectedDates.value.length > 0;
     });
+    const isWarningHidden = ref(true);
 
     function doCreatePoll() {
         if(!isCreateEnabled.value)
@@ -28,7 +29,10 @@
     function doAddDate(){
         if(!selectedDates.value.includes(currentDate.value) && 
             !isAddDisabled.value) {
+            isWarningHidden.value = true;
             selectedDates.value.push(currentDate.value);            
+        } else{
+            isWarningHidden.value = false;
         }
     }
 
@@ -49,8 +53,13 @@
         <div class="mb-3">
             <label for="lbl-add-date-and-time" class="form-label" aria-label="Add dates & time">2. Add dates & time</label>
             <div class="input-group">                
-                <input v-model="currentDate" id="lbl-add-date-and-time" class="form-control mx-1" type="datetime-local" aria-label="Current date"/>
+                <input v-model="currentDate" id="lbl-add-date-and-time" class="form-control mx-1" type="datetime-local" aria-label="Current date"/>                
                 <button @click="doAddDate" :disabled="isAddDisabled" type="button" class="btn btn-success" aria-label="Add date">Add date</button>
+            </div>
+            <div class="input-group">
+                <span class="text-danger mx-2" :class="{ 'd-none' : isWarningHidden }" aria-label="Date already exists">
+                    Date already exists
+                </span>
                 <div v-for="(date, index) in selectedDates" :key="index" class="input-group">
                     <div class="input-group">
                          <input :value="new Date(date).toLocaleString()" disabled type="text" class="form-control m-1" />
