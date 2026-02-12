@@ -13,29 +13,33 @@ const updateLinkToPoll = (value) => {
 </script>
 
 <template>
-  <header>
-    <CreatePoll @poll-created="updateLinkToPoll"/>   
-  </header>
-  <div class="wrapper">
-      <!-- <TheWelcome />       -->
-       <PollCreated :link-to-poll="linkToPoll"/>
+  <div class="container main-content">
+    <div class="row">
+      <div class="col">
+        <CreatePoll @poll-created="updateLinkToPoll"/>   
+      </div>
+      <div class="col wrapper">
+          <!-- <TheWelcome />       -->
+          <PollCreated :link-to-poll="linkToPoll"/>
+      </div>
+    </div>    
   </div>
 </template>
 
 <style scoped>
-header {
+.main-content {
   line-height: 1.5;
   max-height: 100vh;
 }
 
 @media (min-width: 1024px) {
-  header {
+  .main-content {
     display: flex;
     place-items: center;
     padding-right: calc(var(--section-gap) / 2);
   }
 
-  header .wrapper {
+  .main-content .wrapper {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
