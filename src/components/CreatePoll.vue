@@ -47,7 +47,7 @@
 
 <template>
     <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <h1>Create new datepoll</h1>
+        <h1>New datepoll</h1>
         <div class="mb-3">
             <label for="lbl-enter-name" class="form-label" aria-label="Give it a name">1. Give it a name</label>
             <div class="input-group">                

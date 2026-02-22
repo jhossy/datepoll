@@ -8,25 +8,27 @@ const linkToPoll = ref('');
 const updateLinkToPoll = (value) => {
   console.log('received: ' + value);
   var receivedPoll = JSON.parse(value);
-  linkToPoll.value = window.location.href + "?pid=" + receivedPoll.id;
+  linkToPoll.value = "/poll?pid=" + receivedPoll.id;
 }
 </script>
 
 <template>
-  <div class="container main-content">
+  <div class="container">
     <div class="row">
       <div class="col">
         <CreatePoll @poll-created="updateLinkToPoll"/>   
-      </div>
-      <div class="col wrapper">
+      </div>      
+    </div>
+    <div class="row">
+      <div class="col">
           <!-- <TheWelcome />       -->
           <PollCreated :link-to-poll="linkToPoll"/>
       </div>
-    </div>    
+    </div>
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .main-content {
   line-height: 1.5;
   max-height: 100vh;
@@ -45,4 +47,4 @@ const updateLinkToPoll = (value) => {
     flex-wrap: wrap;
   }
 }
-</style>
+</style> -->
