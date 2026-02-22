@@ -24,21 +24,18 @@
                         <li v-for="(elm, index) in dateoptions" :key="index" class="list-group-item d-flex justify-content-between">                            
                             <div>
                                 <label :for="'chk_' + index" class="form-label">{{ elm.date }}</label>
-                            </div>                                                        
-                            <p class="card-text">
-                                <small class="text-muted">{{ elm.votes }} votes</small>
-                            </p>                            
-                            <div>
-                                <input type="checkbox" :id="'chk_' + index" :value="elm.date" v-model="selectedDates" class="form-check-input"/>
+                                <small class="text-muted mx-3">{{ elm.votes }} votes</small>
                             </div>
+                            <input type="checkbox" :id="'chk_' + index" :value="elm.date" v-model="selectedDates" class="form-check-input"/>
                         </li>
                     </ul>
                 </div>
-                <div class="col g-2">
+                <hr />
+                <div class="col">
                     <div class="col-auto">
-                        <input type="text" placeholder="Enter name here..." v-model="userName" class="form-control"/>                
+                        <input type="text" placeholder="Enter your name here..." v-model="userName" class="form-control"/>                
                     </div>
-                    <div class="col-auto">
+                    <div class="col-auto mt-2 d-flex justify-content-end">
                         <button @click="btnSubmitVote" :disabled="userName.length === 0" class="btn btn-success mb-3">Submit vote</button>
                     </div>
                 </div>
