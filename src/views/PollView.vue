@@ -14,34 +14,36 @@
 </script>
 
 <template>
-    <div class="container">
-        <form class="row g-2">
-            <div class="row">
-                <h1>Displaying poll: {{ $route.query.pid }}</h1>
-            </div>
-            <div class="row">            
-                <ul v-for="(elm, index) in dateoptions" :key="index" class="list-group">
-                    <li class="list-group-item">
-                        <div class="col-auto form-check">
-                            <label :for="'chk_' + index" class="form-label">{{ elm.date }}</label>
-                            <input type="checkbox" :id="'chk_' + index" :value="elm.date" v-model="selectedDates" class="form-check-input"/>
-                        </div>
-                        <div class="col-auto">
-                            <label for="staticVotes" class="visually-hidden" >Votes</label>
-                            <input type="text" readonly class="form-control-plaintext" id="staticVotes" :value="elm.votes + 'votes'">
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="row g-2">
-                <div class="col-auto">
-                    <input type="text" placeholder="Enter name here..." v-model="userName" class="form-control"/>                
+    {{ $route.query.pid }}
+    <div class="container shadow p-3 mb-5 bg-body-tertiary rounded">
+        <h1>Please vote</h1>
+        <div class="row">
+            <form >
+                <div class="col">            
+                    <ul class="list-group">
+                        <li v-for="(elm, index) in dateoptions" :key="index" class="list-group-item d-flex justify-content-between">                            
+                            <div>
+                                <label :for="'chk_' + index" class="form-label">{{ elm.date }}</label>
+                            </div>                                                        
+                            <p class="card-text">
+                                <small class="text-muted">{{ elm.votes }} votes</small>
+                            </p>                            
+                            <div>
+                                <input type="checkbox" :id="'chk_' + index" :value="elm.date" v-model="selectedDates" class="form-check-input"/>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-auto">
-                    <button @click="btnSubmitVote" :disabled="userName.length === 0" class="btn btn-success mb-3">Submit vote</button>
+                <div class="col g-2">
+                    <div class="col-auto">
+                        <input type="text" placeholder="Enter name here..." v-model="userName" class="form-control"/>                
+                    </div>
+                    <div class="col-auto">
+                        <button @click="btnSubmitVote" :disabled="userName.length === 0" class="btn btn-success mb-3">Submit vote</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
         {{ selectedDates }}
     </div>
 </template>
