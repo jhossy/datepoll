@@ -1,5 +1,6 @@
 <script setup>
     import { ref } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
     const date1 = new Date().toISOString().slice(0, 16);
     const date2 = new Date('2026-01-21T15:31').toISOString().slice(0, 16);
     const date3 = new Date('2026-03-21T15:31').toISOString().slice(0, 16);
@@ -8,8 +9,17 @@
     const selectedDates = ref([]);
     const userName  = ref('');
 
+    const route = useRoute();
+    const router = useRouter();
+
     function btnSubmitVote() {
+        console.log('pid:' + route.query.pid);
         alert(userName.value + ' submitted vote: ' + selectedDates.value.length);
+        
+        router.push({
+            path: 'poll',
+            query: { pid: route.query.pid }
+        });
     }
 </script>
 

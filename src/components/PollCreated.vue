@@ -9,7 +9,9 @@
 <template>
     <div class="container overflow-auto mw-75">
         <div class="row">
-            <p>Link > <a :href="props.linkToPoll">{{ props.linkToPoll }}</a></p>
+            <p>
+                <RouterLink :to="props.linkToPoll">{{ props.linkToPoll }}</RouterLink>
+            </p>
         </div>
     </div>
 </template>
